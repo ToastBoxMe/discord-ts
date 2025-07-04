@@ -43,7 +43,7 @@ const slashCommands = new Collection<string, SlashCommand>();
 const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command, hellocommand.command]
 console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" + slashCommandsArr);
 const rest = new REST({ version: "10" }).setToken(token);
-rest.put(Routes.applicationCommands(client_id), {
+await rest.put(Routes.applicationCommands(client_id), {
     body: slashCommandsArr.map(command => command.toJSON())
 }).then((data: any) => {
     console.log(`🔥 Successfully loaded ${data.length} slash command(s)`)
