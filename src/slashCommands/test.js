@@ -1,4 +1,6 @@
-    const { SlashCommandBuilder } = require('discord.js');
+import { SlashCommandBuilder, ChannelType, TextChannel, EmbedBuilder } from "discord.js"
+import { SlashCommand } from "../types";
+const { SlashCommandBuilder } = require('discord.js');
 
     module.exports = {
         data: new SlashCommandBuilder()
