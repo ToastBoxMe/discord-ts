@@ -47,6 +47,7 @@ await rest.put(Routes.applicationCommands(client_id), {
     body: slashCommandsArr.map(command => command.toJSON())
 }).then((data: any) => {
     console.log(`🔥 Successfully loaded ${data.length} slash command(s)`)
+    console.log("slashCommandsArr:", slashCommandsArr.map(c => c.name));
 }).catch(e => {
     console.log(e)
 });
