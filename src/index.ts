@@ -14,6 +14,7 @@ import { readdirSync } from "fs";
 import dotenv from "dotenv";
 dotenv.config();
 import testCommand from "./slashCommands/ping";
+import pingCommand from "./slashCommands/test";
 
 const token = process.env.DISCORD_TOKEN; // Token from Railway Env Variable.
 const client_id = process.env.CLIENT_ID;
@@ -31,7 +32,12 @@ console.log("jweqioweqeqww");
 
 const slashCommands = new Collection<string, SlashCommand>()
 slashCommands.set(testCommand.command.name, testCommand)
-const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command]
+slashCommands.set(pingCommand.command.name, pingCommand)
+const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command, pingCommand.command]
+
+//const slashCommands = new Collection<string, SlashCommand>()
+//slashCommands.set(testCommand.command.name, testCommand)
+//const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command]
 
 const rest = new REST({ version: "10" }).setToken(token);
 rest.put(Routes.applicationCommands(client_id), {
