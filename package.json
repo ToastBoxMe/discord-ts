@@ -1,6 +1,7 @@
 {
   "name": "discord-ts",
   "version": "1.0.0",
+  "type": "module",
   "description": "Railway Template for a Discord bot using typescript",
   "main": "index.js",
   "scripts": {
