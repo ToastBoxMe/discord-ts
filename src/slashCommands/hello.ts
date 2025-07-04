@@ -1,9 +1,9 @@
 import { SlashCommandBuilder, ChannelType, TextChannel, EmbedBuilder } from "discord.js"
 import { SlashCommand } from "../types";
 
-const testCommand: SlashCommand = {
+const hellocommand: SlashCommand = {
     command: new SlashCommandBuilder()
-        .setName("hello") // ⬅️ changed from "test" to "hello"
+        .setName("hancur")
         .setDescription("Test command")
         .addStringOption(option => {
             return option
@@ -31,4 +31,4 @@ const testCommand: SlashCommand = {
     cooldown: 3
 }
 
-export default testCommand;
+export default hellocommand;
