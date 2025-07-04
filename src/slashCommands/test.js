@@ -1,9 +1,10 @@
 import { SlashCommandBuilder, ChannelType, TextChannel, EmbedBuilder } from "discord.js"
 import { SlashCommand } from "../types";
-const testPingPong: SlashCommand = {
+
+const testCommand: SlashCommand = {
     command: new SlashCommandBuilder()
         .setName("ping")
-        .setDescription("reply pong")
+        .setDescription("reply Pong!")
         .addStringOption(option => {
             return option
                 .setName("content")
@@ -17,8 +18,15 @@ const testPingPong: SlashCommand = {
             if (element.name && element.value) options[element.name] = element.value;
         }
 
-        interaction.reply('Pong!');
+        interaction.reply({
+            embeds: [
+                new EmbedBuilder()
+                    .setAuthor({ name: "Response Title" })
+                    .setDescription(`👋 Pong! )
+            ]
+        })
     },
     cooldown: 3
 }
-export default testPingPong;
+
+export default testCommand;
