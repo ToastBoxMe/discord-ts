@@ -13,7 +13,7 @@ import { join } from "path";
 import { readdirSync } from "fs";
 import dotenv from "dotenv";
 dotenv.config();
-import testCommand from "./slashCommands/ping";
+//import testCommand from "./slashCommands/ping";
 import pingCommand from "./slashCommands/test";
 
 const token = process.env.DISCORD_TOKEN; // Token from Railway Env Variable.
@@ -31,9 +31,8 @@ client.once(Events.ClientReady, async (c) => {
 console.log("jweqioweqeqww");
 
 const slashCommands = new Collection<string, SlashCommand>()
-slashCommands.set(testCommand.command.name, testCommand)
 slashCommands.set(pingCommand.command.name, pingCommand)
-const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command, pingCommand.command]
+const slashCommandsArr: SlashCommandBuilder[] = [pingCommand.command]
 
 //const slashCommands = new Collection<string, SlashCommand>()
 //slashCommands.set(testCommand.command.name, testCommand)
