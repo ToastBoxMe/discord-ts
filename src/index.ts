@@ -29,17 +29,18 @@ client.once(Events.ClientReady, async (c) => {
     console.log(`Logged in as ${c.user.tag}`);
 });
 console.log("jweqioweqeqww");
-/*
+
 const slashCommands = new Collection<string, SlashCommand>()
 slashCommands.set(testCommand.command.name, testCommand)
-slashCommands.set(hellocommand.command.name, hellocommand)
-*/
+//slashCommands.set(hellocommand.command.name, hellocommand)
 
+/*
 const slashCommands = new Collection<string, SlashCommand>();
 
 [testCommand, hellocommand].forEach(cmd => {
   slashCommands.set(cmd.command.name, cmd);
 });
+*/
 const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command, hellocommand.command]
 //console.log("slashCommandsArr:", slashCommandsArr.map(c => c.name));
 const rest = new REST({ version: "10" }).setToken(token);
