@@ -32,7 +32,7 @@ console.log("jweqioweqeqww");
 
 const slashCommands = new Collection<string, SlashCommand>()
 slashCommands.set(testCommand.command.name, testCommand)
-slashCommands.set(hellocmannd.command.name, hellocommand)
+slashCommands.set(hellocommand.command.name, hellocommand)
 const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command, hellocommand.command]
 
 const rest = new REST({ version: "10" }).setToken(token);
