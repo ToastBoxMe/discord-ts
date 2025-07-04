@@ -4,7 +4,7 @@ import { SlashCommand } from "../types";
 const testCommand: SlashCommand = {
     command: new SlashCommandBuilder()
         .setName("ping")
-        .setDescription("reply Pong!")
+        .setDescription("Test command")
         .addStringOption(option => {
             return option
                 .setName("content")
@@ -22,7 +22,9 @@ const testCommand: SlashCommand = {
             embeds: [
                 new EmbedBuilder()
                     .setAuthor({ name: "Response Title" })
-                    .setDescription(`👋 Pong! )
+                    .setDescription(`👋 Pong! 
+                    Your ping: ${interaction.client.ws.ping}
+                    Your input: ${options.content}`)
             ]
         })
     },
