@@ -1,67 +1,53 @@
-import {
-    Client,
-    Events,
-    GatewayIntentBits,
-    SlashCommandBuilder,
-    Partials,
-    REST,
-    Routes,
-    Collection
-} from "discord.js";
-import type { SlashCommand } from "./types";
-import { join } from "path";
-import { readdirSync } from "fs";
-import dotenv from "dotenv";
-dotenv.config();
-import testCommand from "./slashCommands/ping";
+import fs from 'fs';
+import path from 'path';
+import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
+import { config } from 'dotenv';
+import { SlashCommand } from './types';
+import { token } from './config';
 
-const token = process.env.DISCORD_TOKEN; // Token from Railway Env Variable.
-const client_id = process.env.CLIENT_ID;
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.MessageContent,
-    ],
-    partials: [Partials.Channel],
-});
-client.once(Events.ClientReady, async (c) => {
-    console.log(`Logged in as ${c.user.tag}`);
-});
-console.log("jweqioweqeqww");
+config();
 
-const slashCommands = new Collection<string, SlashCommand>()
-slashCommands.set(testCommand.command.name, testCommand)
-const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command]
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+client.commands = new Collection<string, SlashCommand>();
 
-const rest = new REST({ version: "10" }).setToken(token);
-rest.put(Routes.applicationCommands(client_id), {
-    body: slashCommandsArr.map(command => command.toJSON())
-}).then((data: any) => {
-    console.log(`🔥 Successfully loaded ${data.length} slash command(s)`)
-}).catch(e => {
-    console.log(e)
+const commandsPath = path.join(__dirname, 'slashCommands');
+const commandFiles = fs
+  .readdirSync(commandsPath)
+  .filter(file => file.endsWith('.ts') || file.endsWith('.js'));
+
+for (const file of commandFiles) {
+  const filePath = path.join(commandsPath, file);
+  const command = require(filePath).default as SlashCommand;
+
+  if ('data' in command && 'execute' in command) {
+    client.commands.set(command.data.name, command);
+  } else {
+    console.warn(`[WARNING] Command at ${filePath} is missing "data" or "execute".`);
+  }
+}
+
+client.once(Events.ClientReady, c => {
+  console.log(`✅ Ready! Logged in as ${c.user.tag}`);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
-    if (!interaction.isChatInputCommand()) return;
-    const command = slashCommands.get(interaction.commandName);
+  if (!interaction.isChatInputCommand()) return;
 
-    if (!command) {
-        console.error(`No command matching ${interaction.commandName} was found.`);
-        return;
-    }
+  const command = client.commands.get(interaction.commandName);
+  if (!command) {
+    console.error(`❌ No command matching ${interaction.commandName} was found.`);
+    return;
+  }
 
-    try {
-        await command.execute(interaction);
-    } catch (error) {
-        console.error(error);
-        if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-        } else {
-            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-        }
-    }
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content: 'There was an error while executing this command!',
+      ephemeral: true,
+    });
+  }
 });
-client
-    .login(token)
-    .catch((error) => console.error("Discord.Client.Login.Error", error));
+
+client.login(token);
