@@ -3,7 +3,7 @@ import { SlashCommand } from "../types";
 
 const testCommand: SlashCommand = {
     command: new SlashCommandBuilder()
-        .setName("test")
+        .setName("mantab")
         .setDescription("Test command")
         .addStringOption(option => {
             return option
