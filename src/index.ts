@@ -1,14 +1,20 @@
-import fs from 'fs';
-import path from 'path';
 import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
 import { config } from 'dotenv';
-import { SlashCommand } from './types';
 import { token } from './config';
+import testCommand from './slashCommands/ping';
+import { SlashCommand } from './types';
+import fs from 'node:fs';
+import path from 'node:path';
 
 config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-client.commands = new Collection<string, SlashCommand>();
+client.commands = new Collection();
+
+const slashCommandsArr = [];
+slashCommandsArr.push(testCommand.data.toJSON());
+
+client.commands.set(testCommand.data.name, testCommand);
 
 const commandsPath = path.join(__dirname, 'slashCommands');
 const commandFiles = fs
@@ -21,21 +27,25 @@ for (const file of commandFiles) {
 
   if ('data' in command && 'execute' in command) {
     client.commands.set(command.data.name, command);
+    slashCommandsArr.push(command.data.toJSON());
   } else {
-    console.warn(`[WARNING] Command at ${filePath} is missing "data" or "execute".`);
+    console.log(
+      `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
+    );
   }
 }
 
 client.once(Events.ClientReady, c => {
-  console.log(`✅ Ready! Logged in as ${c.user.tag}`);
+  console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
   const command = client.commands.get(interaction.commandName);
+
   if (!command) {
-    console.error(`❌ No command matching ${interaction.commandName} was found.`);
+    console.error(`No command matching ${interaction.commandName} was found.`);
     return;
   }
 
