@@ -38,9 +38,9 @@ slashCommands.set(hellocommand.command.name, hellocommand)
 const slashCommands = new Collection<string, SlashCommand>();
 
 [testCommand, hellocommand].forEach(cmd => {
-  slashCommands.set(cmd.data.name, cmd);
+  slashCommands.set(cmd.command.name, cmd);
 });
-const slashCommandsArr: SlashCommandBuilder[] = [testCommand.data, hellocommand.data]
+const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command, hellocommand.command]
 console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" + slashCommandsArr);
 const rest = new REST({ version: "10" }).setToken(token);
 rest.put(Routes.applicationCommands(client_id), {
