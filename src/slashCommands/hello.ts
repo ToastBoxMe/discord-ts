@@ -1,16 +1,16 @@
-import { SlashCommandBuilder } from 'discord.js';
-import { SlashCommand } from '../types';
+import { SlashCommandBuilder, ChannelType, TextChannel, EmbedBuilder } from "discord.js"
+import { SlashCommand } from "../types";
 
-const hellocommand: SlashCommand = {
+const testCommand: SlashCommand = {
     command: new SlashCommandBuilder()
-        .setName("hello")
-        .setDescription("Greets the user and provides info")
-        .addStringOption(option =>
-            option
+        .setName("hello") // ⬅️ changed from "test" to "hello"
+        .setDescription("Test command")
+        .addStringOption(option => {
+            return option
                 .setName("content")
-                .setDescription("Optional input to include in the greeting")
-                .setRequired(false)
-        ),
+                .setDescription("this is a parameter for a command")
+                .setRequired(false);
+        }),
     execute: async (interaction) => {
         const options: { [key: string]: string | number | boolean } = {};
         for (let i = 0; i < interaction.options.data.length; i++) {
@@ -18,19 +18,17 @@ const hellocommand: SlashCommand = {
             if (element.name && element.value) options[element.name] = element.value;
         }
 
-        await interaction.reply({
+        interaction.reply({
             embeds: [
                 new EmbedBuilder()
-                    .setAuthor({ name: "🤖 Hello from your bot!" })
-                    .setDescription(`This bot is a helpful bot.
-                    
-Your ping: ${interaction.client.ws.ping}ms
-Your input: ${options.content ?? "None provided"}`)
+                    .setAuthor({ name: "Response Title" })
+                    .setDescription(`👋 Hi! 
+                    Your ping: ${interaction.client.ws.ping}
+                    Your input: ${options.content}`)
             ]
-        });
+        })
     },
     cooldown: 3
-};
+}
 
-
-export default hellocommand;
+export default testCommand;
