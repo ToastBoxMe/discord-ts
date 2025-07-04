@@ -7,8 +7,8 @@ const testCommand: SlashCommand = {
         .setDescription("Test command")
         .addStringOption(option => {
             return option
-                .setName("content")
-                .setDescription("this is a parameter for a command")
+                .setName("content1")
+                .setDescription("this is a parameter for a command1")
                 .setRequired(false);
         }),
     execute: async (interaction) => {
