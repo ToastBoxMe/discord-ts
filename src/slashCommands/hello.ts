@@ -1,4 +1,4 @@
-
+/*
 import { SlashCommandBuilder } from 'discord.js';
 import { SlashCommand } from '../types';
 
@@ -12,3 +12,4 @@ const command: SlashCommand = {
 };
 
 export default command;
+*/
