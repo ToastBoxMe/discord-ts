@@ -2,7 +2,7 @@ import { SlashCommandBuilder, ChannelType, TextChannel, EmbedBuilder } from "dis
 import { SlashCommand } from "../types";
 const { SlashCommandBuilder } = require('discord.js');
 
-    module.exports = {
+    SlashCommandBuilder .exports = {
         data: new SlashCommandBuilder()
             .setName('ping')
             .setDescription('Replies with Pong!'),
