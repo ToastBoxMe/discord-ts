@@ -14,7 +14,6 @@ import { readdirSync } from "fs";
 import dotenv from "dotenv";
 dotenv.config();
 import testCommand from "./slashCommands/ping";
-//import pingCommand from "./slashCommands/test";
 
 const token = process.env.DISCORD_TOKEN; // Token from Railway Env Variable.
 const client_id = process.env.CLIENT_ID;
@@ -29,10 +28,6 @@ client.once(Events.ClientReady, async (c) => {
     console.log(`Logged in as ${c.user.tag}`);
 });
 console.log("jweqioweqeqww");
-
-//const slashCommands = new Collection<string, SlashCommand>()
-//slashCommands.set(pingCommand.command.name, pingCommand)
-//const slashCommandsArr: SlashCommandBuilder[] = [pingCommand.command]
 
 const slashCommands = new Collection<string, SlashCommand>()
 slashCommands.set(testCommand.command.name, testCommand)
