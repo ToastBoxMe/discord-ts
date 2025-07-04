@@ -41,7 +41,7 @@ const slashCommands = new Collection<string, SlashCommand>();
   slashCommands.set(cmd.command.name, cmd);
 });
 const slashCommandsArr: SlashCommandBuilder[] = [testCommand.command, hellocommand.command]
-console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" + slashCommandsArr);
+console.log("slashCommandsArr:", slashCommandsArr.map(c => c.name));
 const rest = new REST({ version: "10" }).setToken(token);
 await rest.put(Routes.applicationCommands(client_id), {
     body: slashCommandsArr.map(command => command.toJSON())
