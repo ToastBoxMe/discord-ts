@@ -31,4 +31,4 @@ const pingCommand: SlashCommand = {
     cooldown: 3
 }
 
-export default testCommand;
+export default pingCommand;
